@@ -8,7 +8,12 @@
       </label>
     </div>
     <hr />
-    <div class="w-1/2 lg:w-3/5">
+    <div class="lg:w-3/5 text-center m-auto">
+
+      <section v-if="post.imgURL" class="hero container max-w-screen-lg mx-auto pb-10 flex justify-center">
+        <img class="h-auto max-w-full" :src="post.imgURL" alt="image description" loading="lazy">
+      </section>
+
       <h4 class="text-xl font-semibold mb-2.5 text-grey-400">{{post.title}}</h4>
       <p class="text-base text-gray-700 ml-8">{{post.body}}</p>
       <button @click="router.push('/')" type="button" class="btn-primary mt-12 text-sm font-semibold leading-6">Go Back</button>
