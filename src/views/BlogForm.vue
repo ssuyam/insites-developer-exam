@@ -22,6 +22,19 @@
               </div>
               <p class="mt-3 text-sm leading-6 text-gray-600">Write some content.</p>
             </div>
+            <div class="sm:col-span-4">
+              <label for="title" class="block text-sm font-medium leading-6 text-gray-900">Banner Image</label>
+              <div class="mt-2">
+                <div class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-xl">
+                  <input v-model="INITIAL_FORM.imgURL" type="text" name="image" id="imageurl" class="block flex-1 border-0 bg-transparent p-2.5 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" placeholder="imageurl">
+                </div>
+                <p @click="generateRandomImage" id="helper-text-explanation" class="mt-2 text-sm text-indigo-500 dark:text-indigo-400 link">Generate Random Image</p>
+
+                <div class="..." v-if="INITIAL_FORM.imgURL">
+                  <img :src="INITIAL_FORM.imgURL" class="object-cover h-48 w-96 ...">
+                </div>
+              </div>
+            </div>
             <div class="col-span-full">
               <label class="relative inline-flex items-center cursor-pointer">
                 <input v-model="INITIAL_FORM.isPublished" :checked="INITIAL_FORM.isPublished" type="checkbox" value="" class="sr-only peer">
@@ -50,6 +63,7 @@ const INITIAL_FORM = ref({
   body: '',
   userId: 1,
   isPublished: false,
+  imgURL: '',
 });
 const postsStore = usePostsStore();
 const title = ref('Create');
@@ -61,11 +75,11 @@ if (route.params.id) {
   INITIAL_FORM.value.body = data.body;
   INITIAL_FORM.value.id = data.id;
   INITIAL_FORM.value.isPublished = data.isPublished;
+  INITIAL_FORM.value.imgURL = data.imgURL;
   title.value = 'Edit'
 }
 
 const submit = () => {
-  console.log('INITIAL_FORM', INITIAL_FORM.value)
   if (route.params.id) {
     postsStore.updatePost(INITIAL_FORM.value);
   } else {
@@ -73,8 +87,16 @@ const submit = () => {
   }
   router.push('/');
 }
+
+const generateRandomImage = () => {
+  const id = Math.floor((Math.random() * 1000) + 1)
+  const url = `https://picsum.photos/id/${id}/600/400`;
+  INITIAL_FORM.value.imgURL = url;
+}
 </script>
 
-<style lang="scss" scoped>
-
+<style scoped>
+.link {
+  cursor: pointer;
+}
 </style>
