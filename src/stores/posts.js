@@ -2,11 +2,10 @@ import { defineStore } from 'pinia';
 
 const usePostsStore = defineStore('postsStore', {
   state: () => ({
-    posts: []
+    posts: [],
   }),
-  persist: true,
   getters: {
-
+    
   },
   actions: {
     getPosts() {
@@ -34,9 +33,14 @@ const usePostsStore = defineStore('postsStore', {
       }
     },
     updatePost(post) {
-      console.log('post', post);
       const index = this.posts.findIndex(p => p.id === post.id);
       this.posts[index] = post;
+    },
+    getPaginatedBlog(page, perPage) {
+      const start = (page-1)*perPage;
+      const sample = this.posts;
+      const data = sample.slice(start, start+perPage);
+      return data;
     }
   },
 });
