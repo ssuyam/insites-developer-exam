@@ -67,6 +67,8 @@ const prev = () => {
 const goto = (pNum) => {
   page.value = pNum;
 }
+
+const activeLink = ref(`text-sky-400 after:content-['_↗'] link`);
 </script>
 
 <template>
@@ -83,9 +85,11 @@ const goto = (pNum) => {
               <img v-else class="h-100 max-w-full sm:h-24 sm:max-w-xs sm:mt-2 sm:mr-4" src="https://icon-library.com/images/no-picture-available-icon/no-picture-available-icon-12.jpg" alt="no image" />
             </div>
             <div>
-              <h4 @click="router.push(`/blog/view/${post.slug}`)" class="text-xl font-semibold text-sky-400 after:content-['_↗'] link mb-6 mt-0">{{post.title}}</h4>
+              <h4 v-if="post.isPublished" @click="router.push(`/blog/preview/${post.slug}`)" class="text-xl font-semibold mb-6 mt-0 text-sky-400 after:content-['_↗'] link">{{post.title}}</h4>
+              <h4 v-else :class="[{ activeLink : post.isPublished }, 'text-xl font-semibold mb-6 mt-0']">{{post.title}}</h4>
               <p class="text-base text-gray-700">{{post.body}}</p>
-              <p v-if="post.isPublished" class="ml-8 text-base text-indigo-300">Published</p>
+              <p v-if="post.isPublished" class="text-base text-indigo-300">Published</p>
+              <p @click="router.push(`/blog/publish/${post.slug}`)" v-else class="text-base text-red-300 text-underline link">Publish now</p>
             </div>
           </div>
           <div class="w-full flex lg:w-1/5 p-2.5 justify-end">
