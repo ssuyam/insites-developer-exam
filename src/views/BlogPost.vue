@@ -1,5 +1,5 @@
 <template>
-  <div class="border shadow mt-4 p-12">
+  <div v-if="post" class="border shadow mt-4 p-12">
     <div class="flex flex-column justify-end mb-8">
       <label class="relative inline-flex items-center cursor-pointer">
         <input v-model="post.isPublished" @change="managePost" :checked="post.isPublished" type="checkbox" value="" class="sr-only peer">
@@ -31,9 +31,9 @@ const router = useRouter();
 const postsStore = usePostsStore();
 const title = 'Publish'
 
-const post = ref(postsStore.getPost(route.params.id));
+const post = ref(postsStore.getPost(route.params.slug));
 
-if (post.isPublished) title.value = 'Publish'
+if (post.isPublished) title.value = 'Publish';
 
 const managePost = () => {
   console.log('publish')
