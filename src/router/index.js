@@ -26,8 +26,14 @@ const router = createRouter({
           meta: { layout: 'DefaultLayout' }
         },
         {
-          path: 'view/:slug',
-          name: 'Blog Post',
+          path: 'preview/:slug',
+          name: 'Preview',
+          component: () => import('../views/BlogPost.vue'),
+          meta: { layout: 'DefaultLayout' }
+        },
+        {
+          path: 'publish/:slug',
+          name: 'Publish',
           component: () => import('../views/BlogPost.vue'),
           meta: { layout: 'DefaultLayout' }
         }
