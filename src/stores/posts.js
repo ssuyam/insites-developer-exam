@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia';
+import slugify from '@/composables/slugify';
 
 const usePostsStore = defineStore('postsStore', {
   state: () => ({
@@ -15,14 +16,22 @@ const usePostsStore = defineStore('postsStore', {
         const json = await data.json();
         
         this.posts = json.map( post => {
-          return {...post, isPublished: true}
+          return {
+            ...post,
+            isPublished: true,
+            slug: slugify(post.title)
+          }
         });
         return this.posts;
       } catch (e) {
         console.error(e);
       }
     },
-    getPost(id) {
+    getPost(slug) {
+      const index = this.posts.findIndex(p => p.slug === slug);
+      return this.posts[index];
+    },
+    getPostById(id) {
       const index = this.posts.findIndex(p => p.id === parseInt(id));
       return this.posts[index];
     },

@@ -57,6 +57,8 @@
 import { ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import usePostsStore from '../stores/posts';
+import slugify from '@/composables/slugify';
+
 const INITIAL_FORM = ref({
   id: null,
   title: '',
@@ -70,7 +72,8 @@ const title = ref('Create');
 const route = useRoute();
 const router = useRouter();
 if (route.params.id) {
-  const data = postsStore.getPost(route.params.id);
+  const data = postsStore.getPostById(route.params.id);
+  
   INITIAL_FORM.value.title = data.title;
   INITIAL_FORM.value.body = data.body;
   INITIAL_FORM.value.id = data.id;
@@ -80,6 +83,7 @@ if (route.params.id) {
 }
 
 const submit = () => {
+  INITIAL_FORM.value.slug = slugify(INITIAL_FORM.value.title);
   if (route.params.id) {
     postsStore.updatePost(INITIAL_FORM.value);
   } else {
