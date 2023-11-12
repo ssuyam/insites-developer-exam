@@ -78,8 +78,9 @@ const goto = (pNum) => {
       <div v-if="!isLoading">
         <div v-for="post in posts" :key="post.id" class="flex flex-wrap justify-between border-b-2 mr-2.5 ml-2.5 mt-2.5 p-2.5 mb-36">
           <div class="w-full lg:w-4/5">
-            <h4 @click="router.push(`/blog/view/${post.id}`)" class="text-xl font-semibold text-sky-400 after:content-['_↗'] link mb-6">{{post.id}}. {{post.title}}</h4>
+            <h4 @click="router.push(`/blog/view/${post.id}`)" class="text-xl font-semibold text-sky-400 after:content-['_↗'] link mb-6">{{post.title}}</h4>
             <p class="ml-8 text-base text-gray-700">{{post.body}}</p>
+            <p v-if="post.isPublished" class="ml-8 text-base text-indigo-300">Published</p>
           </div>
           <div class="w-full flex lg:w-1/5 p-2.5 justify-end">
             <button @click="router.push(`/blog/${post.id}`)" class="btn-primary"><pencil /></button>

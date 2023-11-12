@@ -4,15 +4,20 @@ const usePostsStore = defineStore('postsStore', {
   state: () => ({
     posts: [],
   }),
+  persist: true,
   getters: {
     
   },
   actions: {
-    getPosts() {
+    async getPosts() {
       try {
-        return fetch('https://jsonplaceholder.typicode.com/posts')
-                        .then(r => r.json())
-                        .then(data => this.posts = data);
+        const data = await fetch('https://jsonplaceholder.typicode.com/posts');                
+        const json = await data.json();
+        
+        this.posts = json.map( post => {
+          return {...post, isPublished: true}
+        });
+        return this.posts;
       } catch (e) {
         console.error(e);
       }

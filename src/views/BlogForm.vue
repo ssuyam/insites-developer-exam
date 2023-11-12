@@ -22,6 +22,13 @@
               </div>
               <p class="mt-3 text-sm leading-6 text-gray-600">Write some content.</p>
             </div>
+            <div class="col-span-full">
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input v-model="INITIAL_FORM.isPublished" :checked="INITIAL_FORM.isPublished" type="checkbox" value="" class="sr-only peer">
+                <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+                <span class="ms-3 text-sm font-medium">Publish Post</span>
+              </label>
+            </div>
           </div>
         </div>
       </div>
@@ -42,6 +49,7 @@ const INITIAL_FORM = ref({
   title: '',
   body: '',
   userId: 1,
+  isPublished: false,
 });
 const postsStore = usePostsStore();
 const title = ref('Create');
@@ -52,6 +60,7 @@ if (route.params.id) {
   INITIAL_FORM.value.title = data.title;
   INITIAL_FORM.value.body = data.body;
   INITIAL_FORM.value.id = data.id;
+  INITIAL_FORM.value.isPublished = data.isPublished;
   title.value = 'Edit'
 }
 
@@ -60,7 +69,6 @@ const submit = () => {
   if (route.params.id) {
     postsStore.updatePost(INITIAL_FORM.value);
   } else {
-    
     postsStore.addPost(INITIAL_FORM.value);
   }
   router.push('/');
