@@ -79,7 +79,7 @@ const activeLink = ref(`text-sky-400 after:content-['_↗'] link`);
       </div>
       <div v-if="!isLoading">
         <div v-for="post in posts" :key="post.id" class="flex flex-wrap justify-between border-b-2 mr-2.5 ml-2.5 mt-2.5 p-2.5 mb-36">
-          <div class="mx-auto justify-center sm:flex sm:flex-column w-full lg:w-4/5">
+          <div class="mx-auto space-between sm:flex sm:flex-column w-full lg:w-4/5">
             <div class="w-full sm:w-auto">
               <img v-if="post.imgURL" class="h-100 max-w-full sm:h-24 sm:max-w-xs sm:mt-2 sm:mr-4" :src="post.imgURL" alt="image">
               <img v-else class="h-100 max-w-full sm:h-24 sm:max-w-xs sm:mt-2 sm:mr-4" src="https://icon-library.com/images/no-picture-available-icon/no-picture-available-icon-12.jpg" alt="no image" />
